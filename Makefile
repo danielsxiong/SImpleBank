@@ -1,6 +1,11 @@
 postgres:
 	docker run --name postgres15.1 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ab -d postgres:15.1-alpine
 
+migrate:
+	curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
+	sudo apt-get update
+	sudo apt-get install migrate
+
 createdb:
 	docker exec -it postgres15.1 createdb --username=root --owner=root simple_bank
 
