@@ -25,4 +25,4 @@ test:
 	go test -v -cover ./...
 #	$(GOROOT)/bin/go test /mnt/d/Project/simple-bank/db/sqlc
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+.PHONY: postgres migrate createdb dropdb migrateup migratedown sqlc
