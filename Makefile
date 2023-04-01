@@ -25,4 +25,7 @@ test:
 	go test -v -cover ./...
 #	$(GOROOT)/bin/go test /mnt/d/Project/simple-bank/db/sqlc
 
-.PHONY: postgres migrate createdb dropdb migrateup migratedown sqlc
+run:
+	go run main.go
+
+.PHONY: postgres migrate createdb dropdb migrateup migratedown sqlc test run
