@@ -4,6 +4,7 @@ import (
 	"danielsxiong/simplebank/api"
 	db "danielsxiong/simplebank/db/sqlc"
 	"danielsxiong/simplebank/util"
+	_ "github.com/golang/mock/mockgen/model"
 	_ "github.com/lib/pq"
 
 	"database/sql"
