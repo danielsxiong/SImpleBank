@@ -18,8 +18,14 @@ dropdb:
 migrateup:
 	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+migrateup1:
+	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+
 migratedown:
 	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+migratedown1:
+	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
 sqlc:
 	docker run -it --rm -v "$(CURDIR):/src" -w /src kjconroy/sqlc generate
@@ -34,4 +40,4 @@ mock:
 run:
 	go run main.go
 
-.PHONY: postgres migrate gomock createdb dropdb migrateup migratedown sqlc test mock run
+.PHONY: postgres migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run
