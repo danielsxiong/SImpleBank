@@ -18,6 +18,11 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.SetConfigName("app")
 	viper.SetConfigType("env")
 
+	viper.SetDefault("DB_DRIVER", "postgres")
+	viper.SetDefault("DB_SOURCE", "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable")
+	viper.SetDefault("SERVER_ADDRESS", "0.0.0.0:8080")
+	viper.SetDefault("TOKEN_SYMMETRIC_KEY", "12345678901234567890123456789012")
+	viper.SetDefault("ACCESS_TOKEN_DURATION", 15*time.Minute)
 	viper.AutomaticEnv()
 
 	err = viper.ReadInConfig()

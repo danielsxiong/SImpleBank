@@ -19,3 +19,8 @@ vendor/
 
 # Go workspace file
 go.work
+
+# goland
+.idea/
+*.env
+d
