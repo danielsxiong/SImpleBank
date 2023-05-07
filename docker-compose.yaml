@@ -5,6 +5,8 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=ab
       - POSTGRES_DB=simple_bank
+    ports:
+      - "5432:5432"
   api:
     depends_on:
       - postgres

@@ -38,6 +38,11 @@ mock:
 	mockgen -package mockdb -destination db/mock/store.go danielsxiong/simplebank/db/sqlc Store
 
 run:
-	go run main.go
+	docker-compose up
+#	go run main.go
+
+clean:
+	docker-compose down
+	docker rmi simple-bank-api
 
 .PHONY: postgres migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run

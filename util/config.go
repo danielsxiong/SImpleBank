@@ -6,11 +6,12 @@ import (
 )
 
 type Config struct {
-	DBDriver            string        `mapstructure:"DB_DRIVER"`
-	DBSource            string        `mapstructure:"DB_SOURCE"`
-	ServerAddress       string        `mapstructure:"SERVER_ADDRESS"`
-	TokenSymmetricKey   string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
-	AccessTokenDuration time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
+	DBDriver             string        `mapstructure:"DB_DRIVER"`
+	DBSource             string        `mapstructure:"DB_SOURCE"`
+	ServerAddress        string        `mapstructure:"SERVER_ADDRESS"`
+	TokenSymmetricKey    string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
+	AccessTokenDuration  time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
+	RefreshTokenDuration time.Duration `mapstructure:"REFRESH_TOKEN_DURATION"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
@@ -23,6 +24,8 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.SetDefault("SERVER_ADDRESS", "0.0.0.0:8080")
 	viper.SetDefault("TOKEN_SYMMETRIC_KEY", "12345678901234567890123456789012")
 	viper.SetDefault("ACCESS_TOKEN_DURATION", 15*time.Minute)
+	viper.SetDefault("REFRESH_TOKEN_DURATION", 24*time.Hour)
+
 	viper.AutomaticEnv()
 
 	err = viper.ReadInConfig()
