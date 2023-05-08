@@ -1,3 +1,5 @@
+DB_URL=postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable
+
 postgres:
 	docker run --name postgres15.1 -p 5432:5432 --network bank-network -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ab -d postgres:15.1-alpine
 
@@ -16,16 +18,16 @@ dropdb:
 	docker exec -it postgres15.1 dropdb simple_bank
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
 migrateup1:
-	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "$(DB_URL)" -verbose down
 
 migratedown1:
-	migrate -path db/migration -database "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
+	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
 
 sqlc:
 	docker run -it --rm -v "$(CURDIR):/src" -w /src kjconroy/sqlc generate
@@ -45,4 +47,10 @@ clean:
 	docker-compose down
 	docker rmi simple-bank-api
 
-.PHONY: postgres migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run
+dbdocs:
+	dbdocs build doc/db.dbml
+
+dbschema:
+	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
+
+.PHONY: postgres migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run clean dbdocs dbschema
