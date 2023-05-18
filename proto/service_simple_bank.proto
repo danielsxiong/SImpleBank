@@ -13,7 +13,7 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "SimpleBank API";
-    version: "1.0";
+    version: "1.1";
     contact: {
       name: "Xiong";
       url: "https://github.com/danielsxiong/SImpleBank";
@@ -28,11 +28,19 @@ service SimpleBank {
       post: "/v1/users"
       body: "*"
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      description: "Create new User with name, email, and password"
+      summary: "Create new User"
+    };
   }
   rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {
     option (google.api.http) = {
       post: "/v1/users/login"
       body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      description: "Login User with email and password"
+      summary: "Login User"
     };
   }
 }

@@ -7,18 +7,23 @@ import (
 	"danielsxiong/simplebank/gapi"
 	"danielsxiong/simplebank/pb"
 	"danielsxiong/simplebank/util"
+	"embed"
 	_ "github.com/golang/mock/mockgen/model"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/encoding/protojson"
+	"io/fs"
 	"net"
 	"net/http"
 
 	"database/sql"
 	"log"
 )
+
+//go:embed doc/swagger
+var content embed.FS
 
 func main() {
 	config, err := util.LoadConfig(".")
@@ -85,8 +90,13 @@ func runGatewayServer(config util.Config, store db.Store) {
 	mux := http.NewServeMux()
 	mux.Handle("/", grpcMux)
 
-	fs := http.FileServer(http.Dir("/app/doc/swagger"))
-	mux.Handle("/apidocs/", http.StripPrefix("/apidocs/", fs))
+	var staticFS = fs.FS(content)
+	fSys, err := fs.Sub(staticFS, "doc/swagger")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fileServer := http.FileServer(http.FS(fSys))
+	mux.Handle("/apidocs/", http.StripPrefix("/apidocs/", fileServer))
 
 	listener, err := net.Listen("tcp", config.HttpServerAddress)
 	if err != nil {

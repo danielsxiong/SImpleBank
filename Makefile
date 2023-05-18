@@ -40,12 +40,16 @@ mock:
 	mockgen -package mockdb -destination db/mock/store.go danielsxiong/simplebank/db/sqlc Store
 
 run:
+	make proto
+	docker system prune --volumes -f
+	docker-compose build --no-cache
 	docker-compose up
 #	go run main.go
 
 clean:
 	docker-compose down
 	docker rmi simple-bank-api
+	docker-compose rm -f -s -v
 
 dbdocs:
 	dbdocs build doc/db.dbml

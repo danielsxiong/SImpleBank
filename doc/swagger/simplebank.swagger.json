@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "SimpleBank API",
-    "version": "1.0",
+    "version": "1.1",
     "contact": {
       "name": "Xiong",
       "url": "https://github.com/danielsxiong/SImpleBank"
@@ -22,6 +22,8 @@
   "paths": {
     "/v1/users": {
       "post": {
+        "summary": "Create new User",
+        "description": "Create new User with name, email, and password",
         "operationId": "SimpleBank_CreateUser",
         "responses": {
           "200": {
@@ -54,6 +56,8 @@
     },
     "/v1/users/login": {
       "post": {
+        "summary": "Login User",
+        "description": "Login User with email and password",
         "operationId": "SimpleBank_LoginUser",
         "responses": {
           "200": {
