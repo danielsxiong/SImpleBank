@@ -11,6 +11,7 @@ FROM alpine:3.17
 WORKDIR /app
 COPY --from=builder /app/main .
 COPY --from=builder /app/migrate ./migrate
+COPY doc/swagger ./doc/swagger
 COPY app.env .
 COPY db/migration ./migration
 COPY start.sh .
