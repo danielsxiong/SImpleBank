@@ -22,7 +22,7 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.SetConfigType("env")
 
 	viper.SetDefault("DB_DRIVER", "postgres")
-	viper.SetDefault("DB_SOURCE", "postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable")
+	viper.SetDefault("DB_SOURCE", "postgresql://root:ab@postgres:5432/simple_bank?sslmode=disable")
 	viper.SetDefault("MIGRATION_URL", "file://db/migration")
 	viper.SetDefault("HTTP_SERVER_ADDRESS", "0.0.0.0:8080")
 	viper.SetDefault("GRPC_SERVER_ADDRESS", "0.0.0.0:9090")

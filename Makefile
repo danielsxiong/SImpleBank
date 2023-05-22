@@ -1,7 +1,10 @@
 DB_URL=postgresql://root:ab@localhost:5432/simple_bank?sslmode=disable
 
 postgres:
-	docker run --name postgres15.1 -p 5432:5432 --network bank-network -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ab -d postgres:15.1-alpine
+	docker run --name postgres15.1 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ab -e POSTGRES_DB=simple_bank -d postgres:15.1-alpine
+
+postgresdown:
+	docker rm -f postgres15.1
 
 migrate:
 	curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
@@ -71,4 +74,4 @@ proto:
 evans:
 	evans --host localhost --port 9090 -r repl
 
-.PHONY: postgres migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run clean dbdocs dbschema proto evans
+.PHONY: postgres postgresdown migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run clean dbdocs dbschema proto evans
