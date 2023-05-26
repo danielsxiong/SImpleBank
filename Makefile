@@ -44,8 +44,7 @@ mock:
 
 run:
 	make proto
-	docker system prune --volumes -f
-	docker-compose build --no-cache
+	docker-compose build
 	docker-compose up
 #	go run main.go
 

@@ -6,6 +6,7 @@ import (
 )
 
 type Config struct {
+	Environment          string        `mapstructure:"ENVIRONMENT"`
 	DBDriver             string        `mapstructure:"DB_DRIVER"`
 	DBSource             string        `mapstructure:"DB_SOURCE"`
 	MigrationURL         string        `mapstructure:"MIGRATION_URL"`
@@ -21,6 +22,7 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.SetConfigName("app")
 	viper.SetConfigType("env")
 
+	viper.SetDefault("ENVIRONMENT", "dev")
 	viper.SetDefault("DB_DRIVER", "postgres")
 	viper.SetDefault("DB_SOURCE", "postgresql://root:ab@postgres:5432/simple_bank?sslmode=disable")
 	viper.SetDefault("MIGRATION_URL", "file://db/migration")
