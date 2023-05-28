@@ -7,10 +7,17 @@ services:
       - POSTGRES_DB=simple_bank
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
   api:
     depends_on:
       - postgres
-    entrypoint: ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]
+      - redis
+    entrypoint: ["/app/wait-for.sh", "redis:6379", "postgres:5432", "--", "/app/start.sh"]
     command: ["/app/main"]
     build:
       context: .
@@ -20,3 +27,4 @@ services:
       - "9090:9090"
     environment:
       - DB_SOURCE=postgresql://root:ab@postgres:5432/simple_bank?sslmode=disable
+      - REDIS_ADDRESS=redis:6379
