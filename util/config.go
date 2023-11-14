@@ -16,6 +16,9 @@ type Config struct {
 	TokenSymmetricKey    string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
 	AccessTokenDuration  time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
 	RefreshTokenDuration time.Duration `mapstructure:"REFRESH_TOKEN_DURATION"`
+	EmailSenderName      string        `mapstructure:"EMAIL_SENDER_NAME"`
+	EmailSenderAddress   string        `mapstructure:"EMAIL_SENDER_ADDRESS"`
+	EmailSenderPassword  string        `mapstructure:"EMAIL_SENDER_PASSWORD"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
@@ -33,6 +36,9 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.SetDefault("TOKEN_SYMMETRIC_KEY", "12345678901234567890123456789012")
 	viper.SetDefault("ACCESS_TOKEN_DURATION", 15*time.Minute)
 	viper.SetDefault("REFRESH_TOKEN_DURATION", 24*time.Hour)
+	viper.SetDefault("EMAIL_SENDER_NAME", "Simple Bank")
+	viper.SetDefault("EMAIL_SENDER_ADDRESS", "")
+	viper.SetDefault("EMAIL_SENDER_PASSWORD", "")
 
 	viper.AutomaticEnv()
 
