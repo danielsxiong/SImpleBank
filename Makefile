@@ -36,7 +36,7 @@ sqlc:
 	docker run -it --rm -v "$(CURDIR):/src" -w /src kjconroy/sqlc generate
 
 test:
-	go test -v -cover ./...
+	go test -v -cover -short ./...
 #	$(GOROOT)/bin/go test /mnt/d/Project/simple-bank/db/sqlc
 
 mock:
