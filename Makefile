@@ -32,6 +32,9 @@ migratedown:
 migratedown1:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
 
+newmigration:
+	migrate create -ext sql -dir db/migration -seq $(name)
+
 sqlc:
 	docker run -it --rm -v "$(CURDIR):/src" -w /src kjconroy/sqlc generate
 
@@ -57,7 +60,8 @@ dbdocs:
 	dbdocs build doc/db.dbml
 
 dbschema:
-	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
+	npm install -g @dbml/cli
+	dbml2sql --postgres doc/db.dbml -o doc/schema.sql
 
 proto:
 	rm -f pb/*.go
@@ -73,4 +77,4 @@ proto:
 evans:
 	evans --host localhost --port 9090 -r repl
 
-.PHONY: postgres postgresdown migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run clean dbdocs dbschema proto evans
+.PHONY: postgres postgresdown migrate gomock createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test mock run clean dbdocs dbschema proto evans newmigration
