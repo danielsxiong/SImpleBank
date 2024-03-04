@@ -44,6 +44,7 @@ test:
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go danielsxiong/simplebank/db/sqlc Store
+	mockgen -package mockworker -destination worker/mock/distributor.go danielsxiong/simplebank/worker TaskDistributor
 
 run:
 	make proto
