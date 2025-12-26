@@ -36,7 +36,9 @@ newmigration:
 	migrate create -ext sql -dir db/migration -seq $(name)
 
 sqlc:
-	docker run -it --rm -v "$(CURDIR):/src" -w /src kjconroy/sqlc generate
+#	docker run -it --rm -v "$(CURDIR):/src" -w /src kjconroy/sqlc generate
+#	make sure to install sqlc first (sudo snap install sqlc)
+	sqlc generate
 
 test:
 	go test -v -cover -short ./...
