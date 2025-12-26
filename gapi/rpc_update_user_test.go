@@ -9,11 +9,12 @@ import (
 	"danielsxiong/simplebank/util"
 	"database/sql"
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/metadata"
-	"testing"
-	"time"
 )
 
 func TestUpdateUserAPI(t *testing.T) {
@@ -33,8 +34,8 @@ func TestUpdateUserAPI(t *testing.T) {
 			name: "OK",
 			body: &pb.UpdateUserRequest{
 				Username: user.Username,
-				FullName: newName,
-				Email:    newEmail,
+				FullName: &newName,
+				Email:    &newEmail,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				arg := db.UpdateUserParams{

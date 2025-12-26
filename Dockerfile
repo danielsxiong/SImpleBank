@@ -1,5 +1,5 @@
 # Build
-FROM golang:1.19.8-alpine3.17 AS builder
+FROM golang:1.25-alpine AS builder
 WORKDIR /app
 COPY . .
 RUN go build -o main main.go
@@ -15,6 +15,7 @@ COPY app.env .
 COPY db/migration ./db/migration
 COPY start.sh .
 COPY wait-for.sh .
+RUN chmod +x ./start.sh ./wait-for.sh
 
 EXPOSE 8080
 CMD ["/app/main"]

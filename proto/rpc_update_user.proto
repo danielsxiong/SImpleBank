@@ -6,13 +6,15 @@ import "user.proto";
 
 option go_package = "danielsxiong/simplebank/pb";
 
+// UpdateUserRequest contains the fields to update a user account.
 message UpdateUserRequest {
   string username = 1;
-  string password = 2;
-  string full_name = 3;
-  string email = 4;
+  optional string password = 2;
+  optional string full_name = 3;
+  optional string email = 4;
 }
 
+// UpdateUserResponse contains the updated user information.
 message UpdateUserResponse {
   User user = 1;
 }
