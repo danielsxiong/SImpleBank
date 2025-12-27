@@ -3,11 +3,11 @@ package api
 import (
 	db "danielsxiong/simplebank/db/sqlc"
 	"danielsxiong/simplebank/token"
-	"database/sql"
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type transferRequest struct {
@@ -59,7 +59,7 @@ func (server *Server) transfer(ctx *gin.Context) {
 func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency string) (db.Account, bool) {
 	account, err := server.store.GetAccount(ctx, accountID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, db.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return account, false
 		}

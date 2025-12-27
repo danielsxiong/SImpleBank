@@ -3,12 +3,13 @@ package api
 import (
 	db "danielsxiong/simplebank/db/sqlc"
 	"danielsxiong/simplebank/util"
-	"database/sql"
-	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
-	"github.com/lib/pq"
+	"errors"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 type createUserRequest struct {
@@ -58,9 +59,9 @@ func (server *Server) createUser(ctx *gin.Context) {
 
 	user, err := server.store.CreateUser(ctx, arg)
 	if err != nil {
-		if pqErr, ok := err.(*pq.Error); ok {
-			switch pqErr.Code.Name() {
-			case "unique_violation":
+		if pgErr, ok := err.(*pgconn.PgError); ok {
+			switch pgErr.Code {
+			case "23505": // unique_violation
 				ctx.JSON(http.StatusForbidden, errorResponse(err))
 				return
 			}
@@ -96,7 +97,7 @@ func (server *Server) loginUser(ctx *gin.Context) {
 
 	user, err := server.store.GetUser(ctx, req.Username)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, db.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}

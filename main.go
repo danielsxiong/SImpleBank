@@ -9,20 +9,22 @@ import (
 	"danielsxiong/simplebank/pb"
 	"danielsxiong/simplebank/util"
 	"danielsxiong/simplebank/worker"
-	"database/sql"
 	"embed"
-	"github.com/hibiken/asynq"
-	"github.com/rs/zerolog"
 	"io/fs"
 	"net"
 	"net/http"
 	"os"
+
+	"github.com/hibiken/asynq"
+	"github.com/rs/zerolog"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/golang/mock/mockgen/model"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	_ "github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/lib/pq"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -45,7 +47,7 @@ func main() {
 		})
 	}
 
-	conn, err := sql.Open(config.DBDriver, config.DBSource)
+	conn, err := pgxpool.New(context.Background(), config.DBSource)
 	if err != nil {
 		log.Fatal().Err(err).Msg("cannot connect to db: ")
 	}

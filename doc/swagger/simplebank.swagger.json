@@ -74,6 +74,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "UpdateUserRequest contains the fields to update a user account.",
             "in": "body",
             "required": true,
             "schema": {
@@ -237,7 +238,8 @@
         "email": {
           "type": "string"
         }
-      }
+      },
+      "description": "UpdateUserRequest contains the fields to update a user account."
     },
     "pbUpdateUserResponse": {
       "type": "object",
@@ -245,7 +247,8 @@
         "user": {
           "$ref": "#/definitions/pbUser"
         }
-      }
+      },
+      "description": "UpdateUserResponse contains the updated user information."
     },
     "pbUser": {
       "type": "object",

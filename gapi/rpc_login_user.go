@@ -6,7 +6,8 @@ import (
 	"danielsxiong/simplebank/pb"
 	"danielsxiong/simplebank/util"
 	"danielsxiong/simplebank/val"
-	"database/sql"
+	"errors"
+
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -21,7 +22,7 @@ func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (
 
 	user, err := server.store.GetUser(ctx, req.GetUsername())
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, db.ErrRecordNotFound) {
 			return nil, status.Errorf(codes.NotFound, "user not found: %s", req.GetUsername())
 		}
 		return nil, status.Errorf(codes.Internal, "failed to login user: %s", err.Error())
