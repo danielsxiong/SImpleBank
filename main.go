@@ -25,7 +25,6 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	_ "github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
-	_ "github.com/lib/pq"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
