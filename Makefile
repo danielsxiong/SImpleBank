@@ -80,6 +80,9 @@ run:
 	docker-compose up
 #	go run main.go
 
+quit:
+	docker-compose down
+
 clean:
 	docker-compose down
 	docker rmi simple-bank-api
