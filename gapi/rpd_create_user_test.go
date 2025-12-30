@@ -9,10 +9,11 @@ import (
 	"danielsxiong/simplebank/worker"
 	mockworker "danielsxiong/simplebank/worker/mock"
 	"fmt"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
+
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/require"
 )
 
 type eqCreateUserTxParamsMatcher struct {
@@ -64,6 +65,7 @@ func randomUser(t *testing.T) (db.User, string) {
 
 	return db.User{
 		Username:       util.RandomOwner(),
+		Role:           util.DepositorRole,
 		HashedPassword: hashedPassword,
 		Email:          util.RandomEmail(),
 		FullName:       util.RandomOwner(),

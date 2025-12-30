@@ -1,6 +1,6 @@
--- SQL dump generated using DBML (dbml-lang.org)
+-- SQL dump generated using DBML (dbml.dbdiagram.io)
 -- Database: PostgreSQL
--- Generated at: 2024-03-02T13:58:17.562Z
+-- Generated at: 2025-12-30T03:30:38.134Z
 
 CREATE TYPE "Currency" AS ENUM (
   'USD',
@@ -9,6 +9,7 @@ CREATE TYPE "Currency" AS ENUM (
 
 CREATE TABLE "users" (
   "username" varchar PRIMARY KEY,
+  "role" varchar NOT NULL DEFAULT 'depositor',
   "hashed_password" varchar NOT NULL,
   "full_name" varchar NOT NULL,
   "email" varchar UNIQUE NOT NULL,

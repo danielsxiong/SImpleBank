@@ -60,6 +60,7 @@ func TestUpdateUserAPI(t *testing.T) {
 					PasswordChangedAt: user.PasswordChangedAt,
 					CreatedAt:         user.CreatedAt,
 					IsEmailVerified:   user.IsEmailVerified,
+					Role:              user.Role,
 				}
 
 				store.EXPECT().
@@ -68,7 +69,7 @@ func TestUpdateUserAPI(t *testing.T) {
 					Return(updatedUser, nil)
 			},
 			buildContext: func(t *testing.T, tokenMaker token.Maker) context.Context {
-				return newContextWithAuth(t, tokenMaker, user.Username, time.Minute)
+				return newContextWithAuth(t, tokenMaker, user.Username, user.Role, time.Minute)
 			},
 			checkResponse: func(t *testing.T, response *pb.UpdateUserResponse, err error) {
 				require.NoError(t, err)
@@ -93,7 +94,7 @@ func TestUpdateUserAPI(t *testing.T) {
 					Return(db.User{}, db.ErrRecordNotFound)
 			},
 			buildContext: func(t *testing.T, tokenMaker token.Maker) context.Context {
-				return newContextWithAuth(t, tokenMaker, user.Username, time.Minute)
+				return newContextWithAuth(t, tokenMaker, user.Username, user.Role, time.Minute)
 			},
 			checkResponse: func(t *testing.T, response *pb.UpdateUserResponse, err error) {
 				require.Error(t, err)
@@ -115,7 +116,7 @@ func TestUpdateUserAPI(t *testing.T) {
 					Times(0)
 			},
 			buildContext: func(t *testing.T, tokenMaker token.Maker) context.Context {
-				return newContextWithAuth(t, tokenMaker, user.Username, time.Minute)
+				return newContextWithAuth(t, tokenMaker, user.Username, user.Role, time.Minute)
 			},
 			checkResponse: func(t *testing.T, response *pb.UpdateUserResponse, err error) {
 				require.Error(t, err)
@@ -138,7 +139,7 @@ func TestUpdateUserAPI(t *testing.T) {
 					Times(0)
 			},
 			buildContext: func(t *testing.T, tokenMaker token.Maker) context.Context {
-				return newContextWithAuth(t, tokenMaker, user.Username, -time.Minute)
+				return newContextWithAuth(t, tokenMaker, user.Username, user.Role, -time.Minute)
 			},
 			checkResponse: func(t *testing.T, response *pb.UpdateUserResponse, err error) {
 				require.Error(t, err)

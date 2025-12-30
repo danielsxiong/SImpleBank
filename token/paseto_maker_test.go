@@ -2,9 +2,10 @@ package token
 
 import (
 	"danielsxiong/simplebank/util"
-	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestPASETOMaker(t *testing.T) {
@@ -17,7 +18,7 @@ func TestPASETOMaker(t *testing.T) {
 	issuedAt := time.Now()
 	expiredAt := issuedAt.Add(duration)
 
-	token, payload, err := maker.CreateToken(username, duration)
+	token, payload, err := maker.CreateToken(username, util.DepositorRole, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 	require.NotEmpty(t, payload)
@@ -39,7 +40,7 @@ func TestExpiredPASETOToken(t *testing.T) {
 	username := util.RandomOwner()
 	duration := time.Minute
 
-	token, payload, err := maker.CreateToken(username, -duration)
+	token, payload, err := maker.CreateToken(username, util.DepositorRole, -duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 	require.NotEmpty(t, payload)

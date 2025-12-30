@@ -91,8 +91,10 @@ clean:
 dbdocs:
 	dbdocs build doc/db.dbml
 
-dbschema:
+dbschema-install:
 	npm install -g @dbml/cli
+
+dbschema:
 	dbml2sql --postgres doc/db.dbml -o doc/schema.sql
 
 proto:
